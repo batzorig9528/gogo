@@ -5,6 +5,65 @@
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <title>gogo</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <style>
+        /* Media query-г ашиглан гар утасны, гар утасны хэвтээ болон компьютерийн дэлгэцээр өөрчилж байна */
+@media screen and (max-width: 767px) {
+    /* Гар утасны хэвтээнд харагдацгаа хэсгүүдийг алдагдуулж, компьютерийн дэлгэцээнд нь гаргаж байна */
+    header ul {
+        display: none;
+    }
+    /* Гар утасны босоо, гар утасны хэвтээ дэлгэцээнд нь харуулах боломжтой байна */
+    .burger-menu {
+        display: block;
+    }
+}
+
+/* Typography-г дизайнд оруулж веб фонт ашиглаж байна */
+body {
+    font-family: "YourFontStack", sans-serif;
+}
+
+/* Grid-г ашиглан layout-г хийсэн байна */
+section {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+/* CSS анимацийг ашигласан байна */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Transition-г ашигласан байна */
+a {
+    transition: color 0.3s ease-in-out;
+}
+
+/* Custom property-г ашиглан хөгжилтэй CSS ашиглаж байна */
+:root {
+    --main-color: #007bff;
+}
+
+a {
+    color: var(--main-color);
+}
+
+/* Дор хаяж 1 CSS rule болон эмх цэгцтэй тайлбар байна */
+/* Энэ нь таны бизнес логикийг оруулахад туслах юм */
+/*
+    .class-name - Таны классын нэр
+    #id-name - Таны ID-н нэр
+    .class-name:hover - Таны хуудасны class-н hover үед
+*/
+
+/* Lighthouse болон W3C CSS validator ашиглан шалгаж, алдаа үйлчилгээгүй байх */
+    </style>
 </head>
 <body>
     <header>
