@@ -1,0 +1,46 @@
+{
+  "news": {
+    "title": "Шинэ мэдээ",
+    "items": [
+      {
+        "title": "Мэдээ 1",
+        "link": "medee.html",
+        "image": "md1.jpg",
+        "commentIcon": "comment-light.bd31b019.svg",
+        "comments": 12
+      },
+      {
+        "title": "Мэдээ 2",
+        "link": "medee.html",
+        "image": "md2.jpg",
+        "commentIcon": "comment-light.bd31b019.svg",
+        "comments": 8
+      },
+      // Add more news items as needed
+    ]
+  },
+  "featured": {
+    "title": "Онцлох мэдээ",
+    "items": [
+      {
+        "title": "Мэдээ 1",
+        "link": "medee.html",
+        "image": "md1.jpg",
+        "description": "dadadadadada dad ad adadada ad a dad ad a da da da dad ad a da da da dad ad a da da d aa  ad ad ada a ada",
+        "commentIcon": "comment-light.bd31b019.svg",
+        "comments": 12,
+        "timeIcon": "time-gray.9098dcef.svg"
+      },
+      {
+        "title": "Мэдээ 2",
+        "link": "medee.html",
+        "image": "md2.jpg",
+        "description": "dadadadadada dad ad adadada ad a dad ad a da da da dad ad a da da da dad ad a da da d aa  ad ad ada a ada",
+        "commentIcon": "comment-light.bd31b019.svg",
+        "comments": 15,
+        "timeIcon": "time-gray.9098dcef.svg"
+      },
+      // Add more featured items as needed
+    ]
+  }
+}

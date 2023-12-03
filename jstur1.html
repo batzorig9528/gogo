@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>gogo</title>
+    <!-- Your existing styles -->
+    <style>
+        /* Add any additional styles if needed */
+    </style>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+</head>
+<body>
+    <header>
+        <!-- Your existing header content -->
+    </header>
+    
+    <img src="cover1.jpg">
+
+    <section id="newsSection">
+        <!-- Content will be dynamically loaded here -->
+    </section>
+
+    <section id="featuredSection">
+        <!-- Content will be dynamically loaded here -->
+    </section>
+
+    <footer>
+        <!-- Your existing footer content -->
+    </footer>
+
+    <script>
+        // Fetch data from the JSON file
+        fetch('data.json')
+            .then(response => response.json())
+            .then(data => {
+                // Update news section
+                const newsSection = document.getElementById('newsSection');
+                newsSection.innerHTML = `<header><h2>${data.news.title}</h2></header>`;
+                data.news.items.forEach(item => {
+                    newsSection.innerHTML += `
+                        <li>
+                            <a href="${item.link}" class="mqhlist">
+                                <img src="${item.image}" >
+                                <h2>${item.title}</h2>
+                                <div class="mqlist">
+                                    <img src="${item.commentIcon}" >
+                                    <p style="padding-left: 5px;">${item.comments}</p>
+                                </div>
+                            </a>
+                        </li>
+                    `;
+                });
+
+                // Update featured section
+                const featuredSection = document.getElementById('featuredSection');
+                featuredSection.innerHTML = `<header><h2>${data.featured.title}</h2></header>`;
+                data.featured.items.forEach(item => {
+                    featuredSection.innerHTML += `
+                        <li>
+                            <a href="${item.link}" style="display: flex;">
+                                <img src="${item.image}" >
+                                <div class="mlist">
+                                    <h2>${item.title}</h2>
+                                    <p>${item.description}</p>
+                                    <div class="mqlist">
+                                        <img src="${item.commentIcon}">
+                                        <p style="padding-left: 5px;">${item.comments}</p>
+                                        <img src="${item.timeIcon}" style="padding-left: 10px;">
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                    `;
+                });
+            })
+            .catch(error => console.error('Error fetching JSON:', error));
+    </script>
+</body>
+</html>
