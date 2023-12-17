@@ -2,113 +2,91 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JSON to HTML</title>
 </head>
 <body>
-    <div id="content-container"></div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            // Fetch JSON data
-            fetch('your-api-endpoint') // Replace with your actual API endpoint
+            fetch('data.json') // Replace with your actual API endpoint
                 .then(response => response.json())
                 .then(data => renderHTML(data))
                 .catch(error => console.error('Error fetching data:', error));
 
-            // Render HTML content
             function renderHTML(data) {
-                const contentContainer = document.getElementById('content-container');
-                const header = data.header;
-                const article = data.article;
-                const section = data.section;
-
-                // Render header
+                // Create header HTML
                 const headerHTML = `
                     <header>
                         <a href="index.html">
-                            <img src="${header.logoSrc}">
+                            <img src="gogo-logo.345096b3.png">
                         </a>
                         <ul>
-                            ${header.menuItems.map(item => `
-                                <li>
-                                    <p>${item.label}</p>
-                                    <a href="${item.link}">
-                                        <img src="${item.iconSrc}">
-                                    </a>
-                                    <p>${item.count || item.date}</p>
-                                </li>
-                            `).join('')}
+                            <li>
+                                <p>цагагаар</p>
+                                <a href="medee.html">
+                                    <img src="sun-icon.b61be7df.svg">
+                                </a>
+                                <p>${data.article.header.title}</p>
+                            </li>
+                            <li>
+                                <p>зурхай</p>
+                                <a>
+                                    <img src="calendar-icon.ff84145b.svg">
+                                </a>
+                                <p>${data.article.profile.timestamp}</p>
+                            </li>
+                            <li>
+                                <p>зурхай</p>
+                                <a>
+                                    <img src="calendar-icon.b616d7e0.png">
+                                </a>
+                                <p>${data.article.footer.reactions.like}</p>
+                            </li>
                             <a>
-                                <img src="${header.burgerMenuSrc}">
+                                <img src="burger-menu.6c31a5c9.svg">
                             </a>
                         </ul>
                     </header>
                 `;
 
-                // Render article
-                const authorHTML = `
-                    <div class="pro">
-                        <img src="${article.author.imageSrc}">
-                        <p style="padding-left: 5px; color: #ffffffb4;">${article.author.name}</p>
-                        <img src="time-gray.9098dcef.svg" style="padding-left: 10px; ">
-                        <p style="padding-left: 5px; color: #ffffffb4; width: 100px;">${article.author.timeAgo}</p>
-                        ${article.author.socialIcons.map(icon => `<img src="${icon.src}">`).join('')}
-                    </div>
-                `;
-
-                const reactionsHTML = `
-                    <footer>
-                        <ul>
-                            ${Object.entries(article.reactions).map(([key, value]) => `
-                                <li>
-                                    <a>
-                                        <img src="${value.src}">
-                                    </a>
-                                    <p>${value.count}</p>
-                                </li>
-                            `).join('')}
-                        </ul>
-                    </footer>
-                `;
-
+                // Create article HTML
                 const articleHTML = `
                     <article style="margin-left: 20px;">
-                        ${authorHTML}
+                        <div class="pro">
+                            <img src="${data.article.profile.image}">
+                            <p style="padding-left: 5px; color: #ffffffb4;">${data.article.profile.author}</p>
+                            <img src="time-gray.9098dcef.svg" style="padding-left: 10px; ">
+                            <p style="padding-left: 5px; color: #ffffffb4; width: 100px;">${data.article.profile.timestamp}</p>
+                            ${data.article.profile.socialMedia.facebook ? '<img src="facebook.483468e9.svg" style="padding-left: 750px;">' : ''}
+                            ${data.article.profile.socialMedia.twitter ? '<img src="twitter.b8e7ff8d.svg">' : ''}
+                        </div>
                         <header>
-                            <h1>${article.title}</h1>
+                            <h1>${data.article.header.title}</h1>
                         </header>
-                        <img src="${article.imageSrc}" style="width: 800px;">
-                        ${article.content.map(paragraph => `<p>${paragraph}</p>`).join('')}
-                        ${reactionsHTML}
+                        <img src="${data.article.image}" style="width: 800px;">
+                        ${data.article.content.map(paragraph => `<p>${paragraph}</p>`).join('')}
+                        <footer>
+                            <ul>
+                                ${Object.entries(data.article.footer.reactions).map(([key, value]) => `
+                                    <li>
+                                        <a>
+                                            <img src="img-reaction-${key}.png">
+                                        </a>
+                                        <p>${value}</p>
+                                    </li>
+                                `).join('')}
+                            </ul>
+                        </footer>
                     </article>
                 `;
 
-                // Render section
-                const sectionHTML = `
-                    <section>
-                        <header>
-                            <h2>Бусад мэдээ</h2>
-                        </header>
-                        <ul>
-                            ${section.news.map(newsItem => `
-                                <li>
-                                    <a href="${newsItem.link}">
-                                        <img src="${newsItem.imageSrc}">
-                                        <h3>${newsItem.title}</h3>
-                                    </a>
-                                </li>
-                            `).join('')}
-                        </ul>
-                    </section>
-                `;
-
-                // Combine everything and render
-                const fullHTML = headerHTML + articleHTML + sectionHTML;
-                contentContainer.innerHTML = fullHTML;
+                // Combine everything and append to the body
+                const fullHTML = headerHTML + articleHTML;
+                document.body.innerHTML = fullHTML;
             }
         });
     </script>
+
 </body>
 </html>
