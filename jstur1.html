@@ -1,54 +1,51 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dynamic Content from JSON</title>
+    <title>HTML to JSON</title>
 </head>
 <body>
-    <div id="content-container">
-        <!-- Content will be dynamically loaded here -->
-    </div>
-
     <script>
-        async function fetchData() {
-            try {
-                const response = await fetch('data.json');
-                const jsonData = await response.json();
+        function htmlToJson() {
+            const articleElement = document.querySelector('article');
 
-                // Call a function to render the content
-                renderContent(jsonData);
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            }
+            // Create a JSON structure
+            const jsonStructure = {
+                article: {
+                    profile: {
+                        image: articleElement.querySelector('.pro img').src,
+                        author: articleElement.querySelector('.pro p').textContent.trim(),
+                        timestamp: articleElement.querySelector('.pro p:nth-child(3)').textContent.trim(),
+                        socialMedia: {
+                            facebook: true,  // You can customize this based on actual data
+                            twitter: true    // You can customize this based on actual data
+                        }
+                    },
+                    header: {
+                        title: articleElement.querySelector('header h1').textContent.trim()
+                    },
+                    image: articleElement.querySelector('img').src,
+                    content: Array.from(articleElement.querySelectorAll('p')).map(p => p.textContent.trim()),
+                    footer: {
+                        reactions: {
+                            like: parseInt(articleElement.querySelector('footer li:nth-child(1) p').textContent),
+                            dislike: parseInt(articleElement.querySelector('footer li:nth-child(2) p').textContent),
+                            love: parseInt(articleElement.querySelector('footer li:nth-child(3) p').textContent)
+                        }
+                    }
+                }
+            };
+
+            // Convert the JSON structure to a string
+            const jsonString = JSON.stringify(jsonStructure, null, 2);
+
+            // Log the resulting JSON string
+            console.log(jsonString);
         }
 
-        function renderContent(data) {
-            // Access the data and update the HTML elements accordingly
-            const contentContainer = document.getElementById('content-container');
-
-            // Example: Display title
-            const titleElement = document.createElement('h1');
-            titleElement.textContent = data.title;
-            contentContainer.appendChild(titleElement);
-
-            // Example: Display an image
-            const imageElement = document.createElement('img');
-            imageElement.src = data.image;
-            contentContainer.appendChild(imageElement);
-
-            // Example: Display paragraphs
-            data.paragraphs.forEach(paragraphText => {
-                const paragraphElement = document.createElement('p');
-                paragraphElement.textContent = paragraphText;
-                contentContainer.appendChild(paragraphElement);
-            });
-        }
-
-        // Fetch and render data when the page loads
-        window.onload = fetchData;
+        // Call the function when the page is loaded
+        window.onload = htmlToJson;
     </script>
 </body>
 </html>
