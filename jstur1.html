@@ -8,116 +8,85 @@
 <body>
 
     <script>
-        // Таны оригинал HTML хуудсыг JSON байдлаар загварчилж авах
-const pageData = {
-  header: {
-    logo: "gogo-logo.345096b3.png",
-    menu: [
-      { label: "цагагаар", icon: "sun-icon.b61be7df.svg", value: "15" },
-      { label: "зурхай", icon: "calendar-icon.ff84145b.svg", value: "10/16" },
-      { label: "зурхай", icon: "calendar-icon.b616d7e0.png", value: "3500" },
-    ],
-    burgerMenuIcon: "burger-menu.6c31a5c9.svg",
-  },
-  article: {
-    profile: {
-      image: "pro.jpeg",
-      name: "Номин",
-      timeIcon: "time-gray.9098dcef.svg",
-      timeValue: "10 минутын өмнө",
-      socialIcons: [
-        { icon: "facebook.483468e9.svg", link: "#" },
-        { icon: "twitter.b8e7ff8d.svg", link: "#" },
-      ],
-    },
-    title: "Хамас бүлэглэл Израиль руу довтолсноос 300 гаруй хүн амиа алдаж, 1800 гаруй хүн шархаджээ",
-    image: "md1.jpg",
-    paragraphs: [
-      "Монгол Улсын Ерөнхий сайд Л.Оюун-Эрдэнэ ...",
-      "Тэрбээр \"Монгол Улсын Үндсэн хуульд заасан бүрэн эрхийнхээ хүрээнд...",
-      "Мөн намрын чуулган өндөрлөхөөс өмнө \"Алсын хараа-2050\", \"Шинэ...",
-    ],
-    reactions: [
-      { icon: "img-reaction-1.25af1ad6.png", count: 0 },
-      { icon: "img-reaction-2.1fb125ba.png", count: 0 },
-      { icon: "img-reaction-3.0c6c7760.png", count: 0 },
-      { icon: "img-reaction-4.c6434c1c.png", count: 0 },
-      { icon: "img-reaction-5.d727c8af.png", count: 0 },
-      { icon: "img-reaction-6.246d2b94.png", count: 0 },
-    ],
-  },
-  otherNews: [
-    { image: "md1.jpg", title: "мэдээ1", link: "medee.html" },
-    { image: "md1.jpg", title: "мэдээ2", link: "medee.html" },
-    { image: "md1.jpg", title: "мэдээ3", link: "medee.html" },
-    { image: "md1.jpg", title: "мэдээ4", link: "medee.html" },
-  ],
-  footer: {
-    logo: "gogo-logo.345096b3.png",
-    sections: [
-      { label: "Бидний тухай", icon: "tech.a4b28dbb.png" },
-      { label: "репакцийн ёс зүй", icon: "redakts.41ba2bab.png" },
-      { label: "Холбоо өарих", icon: "holboo.99f66db8.png" },
-    ],
-    socialIcons: [
-      { icon: "twitter.b8e7ff8d.svg", link: "#" },
-      { icon: "youtube.5095f9af.svg", link: "#" },
-    ],
-  },
-};
+        document.addEventListener('DOMContentLoaded', function () {
+            fetch('./data.json') // Replace with your actual API endpoint
+                .then(response => response.json())
+                .then(data => renderHTML(data))
+                .catch(error => console.error('Error fetching data:', error));
 
-// Хуудсан JSON-г ашиглан хуудсаа үүсгэх
-function createPageFromJSON(data) {
-  const body = document.body;
+            function renderHTML(data) {
+                // Create header HTML
+                const headerHTML = `
+                    <header>
+                        <a href="index.html">
+                            <img src="gogo-logo.345096b3.png">
+                        </a>
+                        <ul>
+                            <li>
+                                <p>цагагаар</p>
+                                <a href="medee.html">
+                                    <img src="sun-icon.b61be7df.svg">
+                                </a>
+                                <p>${data.article.header.title}</p>
+                            </li>
+                            <li>
+                                <p>зурхай</p>
+                                <a>
+                                    <img src="calendar-icon.ff84145b.svg">
+                                </a>
+                                <p>${data.article.profile.timestamp}</p>
+                            </li>
+                            <li>
+                                <p>зурхай</p>
+                                <a>
+                                    <img src="calendar-icon.b616d7e0.png">
+                                </a>
+                                <p>${data.article.footer.reactions.like}</p>
+                            </li>
+                            <a>
+                                <img src="burger-menu.6c31a5c9.svg">
+                            </a>
+                        </ul>
+                    </header>
+                `;
 
-  // Header үүсгэх
-  const header = document.createElement("header");
-  const logoLink = document.createElement("a");
-  const logoImg = document.createElement("img");
-  logoImg.src = data.header.logo;
-  logoLink.href = "index.html";
-  logoLink.appendChild(logoImg);
-  header.appendChild(logoLink);
+                // Create article HTML
+                const articleHTML = `
+                    <article style="margin-left: 20px;">
+                        <div class="pro">
+                            <img src="${data.article.profile.image}">
+                            <p style="padding-left: 5px; color: #ffffffb4;">${data.article.profile.author}</p>
+                            <img src="time-gray.9098dcef.svg" style="padding-left: 10px; ">
+                            <p style="padding-left: 5px; color: #ffffffb4; width: 100px;">${data.article.profile.timestamp}</p>
+                            ${data.article.profile.socialMedia.facebook ? '<img src="facebook.483468e9.svg" style="padding-left: 750px;">' : ''}
+                            ${data.article.profile.socialMedia.twitter ? '<img src="twitter.b8e7ff8d.svg">' : ''}
+                        </div>
+                        <header>
+                            <h1>${data.article.header.title}</h1>
+                        </header>
+                        <img src="${data.article.image}" style="width: 800px;">
+                        ${data.article.content.map(paragraph => <p>${paragraph}</p>).join('')}
+                        <footer>
+                            <ul>
+                                ${Object.entries(data.article.footer.reactions).map(([key, value]) => `
+                                    <li>
+                                        <a>
+                                            <img src="img-reaction-${key}.png">
+                                        </a>
+                                        <p>${value}</p>
+                                    </li>
+                                `).join('')}
+                            </ul>
+                        </footer>
+                    </article>
+                `;
 
-  // Menu үүсгэх
-  const menuUl = document.createElement("ul");
-  data.header.menu.forEach((menuItem) => {
-    const menuLi = document.createElement("li");
-    const menuP = document.createElement("p");
-    menuP.textContent = menuItem.label;
-    const iconLink = document.createElement("a");
-    const iconImg = document.createElement("img");
-    iconImg.src = menuItem.icon;
-    iconLink.appendChild(iconImg);
-    menuLi.appendChild(menuP);
-    menuLi.appendChild(iconLink);
-    const valueP = document.createElement("p");
-    valueP.textContent = menuItem.value;
-    menuLi.appendChild(valueP);
-    menuUl.appendChild(menuLi);
-  });
-  header.appendChild(menuUl);
-
-  // Burger Menu Icon үүсгэх
-  const burgerLink = document.createElement("a");
-  const burgerImg = document.createElement("img");
-  burgerImg.src = data.header.burgerMenuIcon;
-  burgerLink.appendChild(burgerImg);
-  header.appendChild(burgerLink);
-
-  body.appendChild(header);
-
-  // Article үүсгэх
-  const article = document.createElement("article");
-  article.style.marginLeft = "20px";
-  // ... Тухайн HTML хуудсаны бусад элементүүдийг JSON-с авч үүсгэх
-
-  body.appendChild(article);
-
-  // ... Тухайн HTML хуудсаны бусад элементүүдийг JSON-с авч үүсгэх
-
-  // Section үүсгэх
-
+                // Combine everything and append to the body
+                const fullHTML = headerHTML + articleHTML;
+                document.body.innerHTML = fullHTML;
+            }
+        });
     </script>
+
 </body>
 </html>
