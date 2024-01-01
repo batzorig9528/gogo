@@ -65,7 +65,7 @@
                             <h1>${data.article.header.title}</h1>
                         </header>
                         <img src="${data.article.image}" style="width: 800px;">
-                        ${data.article.content.map(paragraph => <p>${paragraph}</p>).join('')}
+                        //${data.article.content.map(paragraph => <p>${paragraph}</p>).join('')}
                         <footer>
                             <ul>
                                 ${Object.entries(data.article.footer.reactions).map(([key, value]) => `
